@@ -1,2 +1,2 @@
 # adlink-manifest
-This project will contain manifest for adlink bsp releases
+adlink lec imx yocto zeus release manifest files
