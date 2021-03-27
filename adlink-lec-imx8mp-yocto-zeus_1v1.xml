@@ -48,7 +48,7 @@
 
   <project name="poky" path="sources/poky" remote="yocto" revision="d88d62c20d7d8da85f02edb170dae0280624ad7e"/>
   
-  <project name="meta-adlink-nxp" path="sources/meta-adlink-nxp" remote="adlink-github" revision="dd8cbce81a32b68345fa38dbd575294bdb681a44">
+  <project name="meta-adlink-nxp" path="sources/meta-adlink-nxp" remote="adlink-github" revision="refs/tags/rel_lec_imx8mp_zeus_1v1">
 	<linkfile dest="adlink-imx-setup-release.sh" src="conf/adlink-conf/adlink-imx-setup-release.sh"/>
   </project>
 
