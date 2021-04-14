@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+  <default sync-j="2"/>
+
+  <remote fetch="https://git.yoctoproject.org/git" name="yocto"/>
+  <remote fetch="https://github.com/openembedded" name="oe"/>
+  <remote fetch="https://github.com/meta-qt5" name="qt5"/>
+  <remote fetch="https://github.com/ADLINK" name="adlink"/>
+
+  <project name="poky" path="poky" remote="yocto" revision="4624b855ed47c5da08953191bfbb39e764ecb343"/>
+  <project name="meta-openembedded" path="meta-openembedded" remote="oe" revision="5741b949a875b07335d4920aefa6defd13ed45c6"/>
+  <project name="meta-intel" path="meta-intel" remote="yocto" revision="5c4a6b02f650a99a5ec55561443fcf880a863d19"/>
+  <project name="meta-qt5" path="meta-qt5" remote="qt5" revision="a00af3eae082b772469d9dd21b2371dd4d237684"/>
+
+  <project name="meta-security" path="meta-security" remote="yocto" revision="5050d1267ad41288c903086030594f8702bfa039"/>
+
+  <project name="meta-adlink-sema" path="meta-adlink-sema" remote="adlink" revision="19a9da10bc0846597fd1df1319807133f7267296"/>
+  <project name="meta-adlink-x86-64bit" path="meta-adlink-x86-64bit" remote="adlink" revision="refs/heads/hardknott" >
+    <linkfile dest="adlink-intel-setup-release.sh" src="conf/adlink-intel-setup-release.sh"/>
+  </project>
+  <project name="meta-adlink-demo" path="meta-adlink-demo" remote="adlink" revision="d90fb20002fec14ac73e058c5452ba6b32229acc"/>
+</manifest>
