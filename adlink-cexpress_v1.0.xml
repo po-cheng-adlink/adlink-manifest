@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+  <default sync-j="2"/>
+
+  <remote fetch="https://git.yoctoproject.org/git" name="yocto"/>
+  <remote fetch="https://github.com/openembedded" name="oe"/>
+  <remote fetch="https://github.com/meta-qt5" name="qt5"/>
+  <remote fetch="https://github.com/ADLINK" name="adlink"/>
+  <remote fetch="https://git.openembedded.org/" name="python" />
+  <remote fetch="https://github.com/jiazhang0" name="secure" />
+
+  <project name="poky" path="poky" remote="yocto" revision="94f6b31befda5c496f65e863a6f8152b42d7ebf0"/>
+  <project name="meta-openembedded" path="meta-openembedded" remote="oe" revision="bb65c27a772723dfe2c15b5e1b27bcc1a1ed884c"/>
+  <project name="meta-intel" path="meta-intel" remote="yocto" revision="faced19dda5332cce9164903b250db5aa9b86259"/>
+  <project name="meta-qt5" path="meta-qt5" remote="qt5" revision="0bdbb344bc0a7261d76d715e570ddc2ecfefae58"/>
+
+  <project name="meta-adlink-sema" path="meta-adlink-sema" remote="adlink" revision="740d616643d0c4829f6e15a30cf869e11a561da5"/>
+  <project name="meta-adlink-x86-64bit" path="meta-adlink-x86-64bit" remote="adlink" revision="aba78229236bd6fe7dbea191e0575063022aa8f8" />
+
+  <project name="meta-secure-core" path="meta-secure-core" remote="secure" revision="e8e80fb7c4971bb05e14ec5e329c1435ba485b2b"/>
+  <project name="meta-python2" path="meta-python2" remote="python" revision="4400f9155ec193d028208cf0c66aeed2ba2b00ab"/>
+
+</manifest>
