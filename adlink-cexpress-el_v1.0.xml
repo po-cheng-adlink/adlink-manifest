@@ -15,7 +15,7 @@
   <project name="meta-qt5" path="meta-qt5" remote="qt5" revision="0d8eb956015acdea7e77cd6672d08dce18061510"/>
 
   <project name="meta-adlink-sema" path="meta-adlink-sema" remote="adlink" revision="f79cbe153a3fcfa365e771f8feadddce487bf095"/>
-  <project name="meta-adlink-x86-64bit" path="meta-adlink-x86-64bit" remote="adlink" revision="60b04da75e1df5c5582be35db3a576833df06bc4">
+  <project name="meta-adlink-x86-64bit" path="meta-adlink-x86-64bit" remote="adlink" revision="e45e37663a574d55d7171bbfb408fa26e8d5389d">
     <linkfile dest="adlink-intel-setup-release.sh" src="scripts/adlink-intel-setup-release.sh"/>
   </project>
 
