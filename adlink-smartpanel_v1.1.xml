@@ -19,7 +19,7 @@
 
   <project name="meta-security" path="meta-security" remote="yocto" revision="c74cc97641fd93e0e7a4383255e9a0ab3deaf9d7"/>
 
-  <project name="meta-adlink-x86-64bit" path="meta-adlink-x86-64bit" remote="adlink" revision="4c692735fce1d0445d77d28efd4e264fbf8b466d" >
+  <project name="meta-adlink-x86-64bit" path="meta-adlink-x86-64bit" remote="adlink" revision="6a5f10ea0316bb7d2d4fec34c35310b91ec79a8c" >
     <linkfile dest="adlink-intel-setup-release.sh" src="scripts/adlink-intel-setup-release.sh"/>
   </project>
 </manifest>
