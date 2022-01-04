@@ -15,7 +15,7 @@
 
   <project name="meta-security" path="meta-security" remote="yocto" revision="5050d1267ad41288c903086030594f8702bfa039"/>
 
-  <project name="meta-adlink-sema" path="meta-adlink-sema" remote="adlink" revision="19a9da10bc0846597fd1df1319807133f7267296"/>
+  <project name="meta-adlink-sema" path="meta-adlink-sema" remote="adlink" revision="01332b67a555ebabb43e84ef43d227aeb8c42f55"/>
   <project name="meta-adlink-x86-64bit" path="meta-adlink-x86-64bit" remote="adlink" revision="refs/heads/hardknott" >
     <linkfile dest="adlink-intel-setup-release.sh" src="conf/adlink-intel-setup-release.sh"/>
   </project>
