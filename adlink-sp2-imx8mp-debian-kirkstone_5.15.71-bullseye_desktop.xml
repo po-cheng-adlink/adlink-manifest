@@ -13,7 +13,6 @@
   <remote fetch="https://git.yoctoproject.org/git" name="yocto"/>
   <remote fetch="https://github.com/nxp-imx-support" name="imx-support"/>
   <remote fetch="https://github.com/ADLINK" name="adlink"/>
-  <remote fetch="https://github.com/Linutronix/nneta-elbe.git" name="linutronix"/>
 
   <project name="fsl-community-bsp-base" path="sources/base" remote="community" revision="60f79f7af60537146298560079ae603260f0bd14" upstream="kirkstone">
     <linkfile dest="README" src="README"/>
@@ -39,6 +38,6 @@
   <project name="meta-adlink-nxp" path="sources/meta-adlink-nxp" remote="adlink" revision="99092a281d58c7bc0ee6b30b18bf4f3fc8593448"  upstream="kirkstone">
     <linkfile dest="adlink-imx-setup-release.sh" src="conf/adlink-conf/adlink-imx-setup-release.sh"/>
   </project>
-  <project name="nneta-elbe" path="sources/meta-elbe" remote="linutronix" revision="57cfdb9f7a1788b4ce5852d9e2e57a4dc8203fd7"  upstream="master"/>
+  <project name="meta-elbe" path="sources/meta-elbe" remote="adlink" revision="f80a60884a280490014443c764a5d250aa1bde06"  upstream="kirkstone"/>
 
 </manifest>
