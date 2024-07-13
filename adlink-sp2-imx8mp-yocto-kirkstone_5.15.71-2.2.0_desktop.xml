@@ -44,7 +44,7 @@
   <project name="meta-adlink-nxp" path="sources/meta-adlink-nxp" remote="adlink" revision="dbcda08a7e4b58d80cadd06aa6f2f45b03479f0a"  upstream="kirkstone">
     <linkfile dest="adlink-imx-setup-release.sh" src="conf/adlink-conf/adlink-imx-setup-release.sh"/>
   </project>
-  <project name="meta-adlink-demo" path="sources/meta-adlink-demo" remote="adlink" revision="ff5f6e98f58dcda3bbc115ca9bca2fef8d45a18e" upstream="kirkstone">
+  <project name="meta-adlink-demo" path="sources/meta-adlink-demo" remote="adlink" revision="efd904958a9d328ff5bb69e4db6fe1927f3c2452" upstream="kirkstone">
     <linkfile dest="setup-multiconfig.sh" src="conf/setup-multiconfig.sh"/>
   </project>
 
