@@ -30,7 +30,7 @@
   <project name="meta-freescale-distro" remote="community" path="sources/meta-freescale-distro" revision="158cc55b6ee30d09957b380859dba52c0f6af68d" upstream="scarthgap"/>
 
   <project name="meta-arm" remote="yp" path="sources/meta-arm" revision="8aa8a1f17f5b64bc691544f989f04fc83df98adb" upstream="scarthgap"/>
-  <project name="meta-qt6" remote="qt" path="sources/meta-qt6" revision="dc13e1bfda4a4757a08c2d6673bc4bac012c4a80" upstream="6.7.0" />
+  <project name="meta-qt6" remote="qt" path="sources/meta-qt6" revision="d4ad3746864a815b9c42bed7f0f81e0471ca975f" upstream="6.7.2" />
   <project name="meta-browser" remote="ossystems" path="sources/meta-browser" revision="dc31889c0899971def535dc1c040edf18bc16691" />
   <project name="meta-security" remote="yp" path="sources/meta-security" revision="11ea91192d43d7c2b0b95a93aa63ca7e73e38034" upstream="scarthgap"/>
   <project name="meta-timesys" remote="timesys" path="sources/meta-timesys" revision="b96d8de949939ad08094f71ed6ed4f88eaf41d5e" upstream="master"/>
@@ -43,10 +43,10 @@
   <project name="meta-matter" remote="imx" path="sources/meta-matter" revision="imx_matter_2024_q1-post" />
   <project name="meta-nxp-demo-experience" remote="imx-support" path="sources/meta-nxp-demo-experience" revision="scarthgap-6.6.23-2.0.0" />
 
-  <project name="meta-adlink-nxp" path="sources/meta-adlink-nxp" remote="adlink" revision="dbcda08a7e4b58d80cadd06aa6f2f45b03479f0a"  upstream="scarthgap">
+  <project name="meta-adlink-nxp" path="sources/meta-adlink-nxp" remote="adlink" revision="32265d127dc212a5c3a2bf2dc2774c2fc1256ef4"  upstream="scarthgap">
     <linkfile dest="adlink-imx-setup-release.sh" src="conf/adlink-conf/adlink-imx-setup-release.sh"/>
   </project>
-  <project name="meta-adlink-demo" path="sources/meta-adlink-demo" remote="adlink" revision="efd904958a9d328ff5bb69e4db6fe1927f3c2452" upstream="scarthgap">
+  <project name="meta-adlink-demo" path="sources/meta-adlink-demo" remote="adlink" revision="fba670cb6416893fcb5b4ac99d06ff7211c3a41d" upstream="scarthgap">
     <linkfile dest="setup-multiconfig.sh" src="conf/setup-multiconfig.sh"/>
   </project>
 </manifest>
