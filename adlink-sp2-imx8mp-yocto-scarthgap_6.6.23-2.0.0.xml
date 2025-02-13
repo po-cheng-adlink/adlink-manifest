@@ -18,7 +18,7 @@
   <remote name="adlink"      fetch="https://github.com/ADLINK"/>
 
   <project name="poky" remote="yp" path="sources/poky" revision="02eacd385eca7aa9cf25aaaa61427aa9c126e0bc" upstream="scarthgap"/>
-  <project name="meta-openembedded" remote="oe" path="sources/meta-openembedded" revision="a72010b414ee3d73888ac9cb4e310e8f05e13aea" upstream="scarthgap"/>
+  <project name="meta-openembedded" remote="oe" path="sources/meta-openembedded" revision="4f11a12b2352bbdfafb6b7d956bf424af4992977" upstream="scarthgap"/>
   <project name="meta-clang" remote="kraj" path="sources/meta-clang" revision="66414c17ae60e489bef9a97031323e92c247fbe1" upstream="scarthgap"/>
 
   <project name="fsl-community-bsp-base" remote="community" path="sources/base" revision="84df0b1ff416c6739472f7f7eadff04fa90d38f6" upstream="scarthgap">
@@ -46,7 +46,7 @@
   <project name="meta-adlink-nxp" path="sources/meta-adlink-nxp" remote="adlink" revision="dd23534d8eafedd8f81516002ed7fa8375741e19"  upstream="scarthgap">
     <linkfile dest="adlink-imx-setup-release.sh" src="conf/adlink-conf/adlink-imx-setup-release.sh"/>
   </project>
-  <project name="meta-adlink-demo" path="sources/meta-adlink-demo" remote="adlink" revision="e4c584603021f3a4fd34f2337b11147a5233db06" upstream="kirkstone">
+  <project name="meta-adlink-demo" path="sources/meta-adlink-demo" remote="adlink" revision="9cdb1ef5c69d7d7397f1dd1f4270a48ae8616b3b" upstream="kirkstone">
     <linkfile dest="setup-multiconfig.sh" src="conf/setup-multiconfig.sh"/>
   </project>
 </manifest>
