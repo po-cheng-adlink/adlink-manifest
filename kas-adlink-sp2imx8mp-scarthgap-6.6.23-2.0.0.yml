@@ -1,0 +1,203 @@
+header:
+  version: 8
+
+machine: sp2-imx8mp
+distro: fsl-imx-xwayland
+target:
+  - adlink-image-verification
+
+repos:
+  meta-adlink-nxp:
+    url: https://github.com/ADLINK/meta-adlink-nxp
+    path: sources/meta-adlink-nxp
+    refspec: scarthgap
+
+  meta-adlink-demo:
+    url: https://github.com/ADLINK/meta-adlink-demo
+    path: sources/meta-adlink-demo
+    refspec: kirkstone
+
+  meta-adlink-edge:
+    url: https://github.com/ADLINK/meta-adlink-edge
+    path: sources/meta-adlink-edge
+    refspec: scarthgap
+
+  meta-imx:
+    url: https://github.com/nxp-imx/meta-imx
+    path: sources/meta-imx
+    refspec: rel_imx_6.6.23_2.0.0
+    layers:
+      meta-imx-bsp:
+      meta-imx-sdk:
+      meta-imx-ml:
+      meta-imx-v2x:
+      meta-imx-cockpit:
+
+  base:
+    url: https://github.com/Freescale/fsl-community-bsp-base
+    path: sources/base
+    refspec: 84df0b1ff416c6739472f7f7eadff04fa90d38f6
+    layers:
+      .: excluded
+
+  poky:
+    url: https://git.yoctoproject.org/git/poky
+    path: sources/poky
+    refspec: 02eacd385eca7aa9cf25aaaa61427aa9c126e0bc
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
+
+  meta-openembedded:
+    url: https://github.com/openembedded/meta-openembedded
+    path: sources/meta-openembedded
+    refspec: 4f11a12b2352bbdfafb6b7d956bf424af4992977
+    layers:
+      meta-oe:
+      meta-multimedia:
+      meta-python:
+      meta-gnome:
+      meta-networking:
+      meta-filesystems:
+      meta-xfce:
+      meta-webserver:
+
+  meta-freescale:
+    url: https://github.com/Freescale/meta-freescale
+    path: sources/meta-freescale
+    refspec: 41b923e59e048b9b2942ff737a4ddac386954c62
+
+  meta-freescale-3rdparty:
+    url: https://github.com/Freescale/meta-freescale-3rdparty
+    path: sources/meta-freescale-3rdparty
+    refspec: 8b61684f0b1ba8bacdf3a69d993445e9791d4932
+
+  meta-freescale-distro:
+    url: https://github.com/Freescale/meta-freescale-distro
+    path: sources/meta-freescale-distro
+    refspec: 158cc55b6ee30d09957b380859dba52c0f6af68d
+
+  meta-clang:
+    url: https://github.com/kraj/meta-clang
+    path: sources/meta-clang
+    refspec: 66414c17ae60e489bef9a97031323e92c247fbe1
+
+  meta-browser:
+    url: https://github.com/OSSystems/meta-browser
+    path: sources/meta-browser
+    refspec: dc31889c0899971def535dc1c040edf18bc16691
+    layers:
+      meta-chromium:
+
+  meta-qt6:
+    url: https://code.qt.io/yocto/meta-qt6
+    path: sources/meta-qt6
+    refspec: d4ad3746864a815b9c42bed7f0f81e0471ca975f
+
+  meta-timesys:
+    url: https://github.com/TimesysGit/meta-timesys.git
+    path: sources/meta-timesys
+    refspec: b96d8de949939ad08094f71ed6ed4f88eaf41d5e
+
+  meta-virtualization:
+    url: https://git.yoctoproject.org/git/meta-virtualization
+    path: sources/meta-virtualization
+    refspec: 1a547c0aa0d75c4143cbb66de6e653d51cdc8bda
+
+  meta-nxp-demo-experience:
+    url: https://github.com/nxp-imx-support/meta-nxp-demo-experience
+    path: sources/meta-nxp-demo-experience
+    refspec: scarthgap-6.6.23-2.0.0
+
+  meta-matter:
+    url: https://github.com/nxp-imx/meta-matter
+    path: sources/meta-matter
+    refspec: imx_matter_2024_q1-post
+    layers:
+      meta-nxp-matter-baseline:
+      meta-nxp-openthread:
+
+  meta-security:
+    url: https://git.yoctoproject.org/git/meta-security
+    path: sources/meta-security
+    refspec: 11ea91192d43d7c2b0b95a93aa63ca7e73e38034
+    layers:
+      meta-parsec:
+      meta-tpm:
+
+  meta-arm:
+    url: https://git.yoctoproject.org/git/meta-arm
+    path: sources/meta-arm
+    refspec: 8aa8a1f17f5b64bc691544f989f04fc83df98adb
+    layers:
+      meta-arm:
+      meta-arm-toolchain:
+
+bblayers_conf_header:
+  standard: |
+    LCONF_VERSION = "7"
+    BBPATH = "${TOPDIR}"
+    BBFILES ?= ""
+
+local_conf_header:
+  reduce_diskspace: |
+    INHERIT += "rm_work"
+  standard: |
+    CONF_VERSION = "2"
+    PACKAGE_CLASSES = "package_deb"
+    USER_CLASSES = "buildstats"
+    PATCHRESOLVE = "noop"
+  debug-tweaks: |
+    EXTRA_IMAGE_FEATURES += "debug-tweaks package-management"
+  diskmon: |
+    BB_DISKMON_DIRS = "\
+        STOPTASKS,${TMPDIR},1G,100K \
+        STOPTASKS,${DL_DIR},1G,100K \
+        STOPTASKS,${SSTATE_DIR},1G,100K \
+        STOPTASKS,/tmp,100M,100K \
+        HALT,${TMPDIR},100M,1K \
+        HALT,${DL_DIR},100M,1K \
+        HALT,${SSTATE_DIR},100M,1K \
+        HALT,/tmp,10M,1K"
+  build-info: |
+    INHERIT += "image-buildinfo"
+    IMAGE_BUILDINFO_VARS = "DISTRO DISTRO_VERSION MACHINE DEVICE_MODEL DEVICE_TYPE IMX_GPU_VERSION RELEASE_VERSION"
+    RELEASE_VERSION = "v2.01.03"
+  license-flags: |
+    ACCEPT_FSL_EULA = "1"
+  users-groups: |
+    EXTRA_USERS_PARAMS += " useradd -m -s /bin/bash -a -G video,render,wayland,input,root,sudo,dialout,plugdev,tty,disk -p '$(openssl passwd adlink)' adlink; \
+                            usermod -a -G video,render,wayland,input,root,sudo,dialout,plugdev,tty,disk -p '$(openssl passwd weston)' weston; \
+                            usermod -p '$(openssl passwd root)' root;"
+  language-pack: |
+    GLIBC_GENERATE_LOCALES = " en_US.UTF-8 en_GB.UTF-8 zh_TW.UTF-8 zh_CN.UTF-8 \
+                               fr_FR.UTF-8 es_ES.UTF-8 de_DE.UTF-8 pt_BR.UTF-8 \
+                               ja_JP.UTF-8 ko_KR.UTF-8 th_TH.UTF-8 vi_VN.UTF-8 \
+                               ms_MY.UTF-8 id_ID.UTF-8"
+    IMAGE_LINGUAS = " en-us en-gb zh-tw zh-cn fr-fr es-es de-de pt-br \
+                      ja-jp ko-kr th-th vi-vn ms-my id-id"
+    IMAGE_INSTALL:append = " glibc-utils localedef locale-base-en-us locale-base-en-gb \
+                             locale-base-zh-tw locale-base-zh-cn locale-base-fr-fr \
+                             locale-base-es-es locale-base-de-de locale-base-pt-br \
+                             locale-base-ja-jp locale-base-ko-kr locale-base-th-th \
+                             locale-base-vi-vn locale-base-ms-my locale-base-id-id"
+    IMAGE_INSTALL:append = " source-han-sans-tw-fonts source-han-sans-kr-fonts \
+                             source-han-sans-jp-fonts source-han-sans-cn-fonts \
+                             ttf-tlwg"
+    CUSTOM_DEFAULT_LOCALE_LANG = "en_US.UTF-8"
+  image-features: |
+    IMAGE_FEATURES[validitems] += "kiosk-mode hab remote logo resize locale fastboot"
+    EXTRA_IMAGE_FEATURES += "ssh-server-openssh"
+    DISTRO_FEATURES:append = " sensors adlink optee"
+    MACHINE_FEATURES:append = " stmm"
+    IMAGE_FSTYPES = "wic.bmap wic.gz"
+  sanity-check: |
+    CONNECTIVITY_CHECK_URIS = "https://www.google.com"
+  extra-packages: |
+    IMAGE_INSTALL:append = " chromium-ozone-wayland"
+  package-configs: |
+    TOOLCHAIN_TARGET_TASK:append = " onnxruntime-dev"
+    PACKAGECONFIG:append:pn-qemu-system-native = " sdl"
+    PACKAGECONFIG:append:pn-opencv_mx8 = " test"
+    UBOOT_EXTRA_CONFIGS:append = " LPDDR4_ALL"
