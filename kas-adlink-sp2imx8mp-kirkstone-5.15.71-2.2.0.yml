@@ -1,0 +1,179 @@
+header:
+  version: 8
+
+machine: sp2-imx8mp
+distro: fsl-imx-xwayland
+target:
+  - adlink-image-verification
+
+repos:
+  meta-adlink-nxp:
+    url: https://github.com/ADLINK/meta-adlink-nxp
+    path: sources/meta-adlink-nxp
+    refspec: kirkstone
+
+  meta-adlink-demo:
+    url: https://github.com/ADLINK/meta-adlink-demo
+    path: sources/meta-adlink-demo
+    refspec: kirkstone
+
+  meta-adlink-edge:
+    url: https://github.com/ADLINK/meta-adlink-edge
+    path: sources/meta-adlink-edge
+    refspec: kirkstone
+
+  meta-imx:
+    url: https://github.com/nxp-imx/meta-imx
+    path: sources/meta-imx
+    refspec: kirkstone-5.15.71-2.2.0
+    layers:
+      meta-bsp:
+      meta-sdk:
+      meta-ml:
+      meta-v2x:
+
+  base:
+    url: https://github.com/Freescale/fsl-community-bsp-base
+    path: sources/base
+    refspec: 60f79f7af60537146298560079ae603260f0bd14
+    layers:
+      .: excluded
+
+  poky:
+    url: https://git.yoctoproject.org/git/poky
+    path: sources/poky
+    refspec: 24a3f7b3648185e33133f5d96b184a6cb6524f3d
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
+
+  meta-openembedded:
+    url: https://github.com/openembedded/meta-openembedded
+    path: sources/meta-openembedded
+    refspec: 744a4b6eda88b9a9ca1cf0df6e18be384d9054e3
+    layers:
+      meta-oe:
+      meta-multimedia:
+      meta-python:
+      meta-gnome:
+      meta-networking:
+      meta-filesystems:
+      meta-xfce:
+      meta-webserver:
+
+  meta-freescale:
+    url: https://github.com/Freescale/meta-freescale
+    path: sources/meta-freescale
+    refspec: c82d4634e7aba8bc0de73ce1dfc997b630051571
+
+  meta-freescale-3rdparty:
+    url: https://github.com/Freescale/meta-freescale-3rdparty
+    path: sources/meta-freescale-3rdparty
+    refspec: 5977197340c7a7db17fe3e02a4e014ad997565ae
+
+  meta-freescale-distro:
+    url: https://github.com/Freescale/meta-freescale-distro
+    path: sources/meta-freescale-distro
+    refspec: d5bbb487b2816dfc74984a78b67f7361ce404253
+
+  meta-clang:
+    url: https://github.com/kraj/meta-clang
+    path: sources/meta-clang
+    refspec: c728c3f9168c8a4ed05163a51dd48ca1ad8ac21d
+
+  meta-browser:
+    url: https://github.com/OSSystems/meta-browser
+    path: sources/meta-browser
+    refspec: e232c2e21b96dc092d9af8bea4b3a528e7a46dd6
+    layers:
+      meta-chromium:
+
+  meta-qt6:
+    url: https://code.qt.io/yocto/meta-qt6
+    path: sources/meta-qt6
+    refspec: 92019beed22aed8847c585c568cfcf41ef4dc8b7
+
+  meta-timesys:
+    url: https://github.com/TimesysGit/meta-timesys.git
+    path: sources/meta-timesys
+    refspec: d1ad27bfacc937048e7f9084b17f4d7c917d2004
+
+  meta-virtualization:
+    url: https://git.yoctoproject.org/git/meta-virtualization
+    path: sources/meta-virtualization
+    refspec: 9482648daf0bb42ff3475e7892542cf99f3b8d48
+
+  meta-nxp-demo-experience:
+    url: https://github.com/nxp-imx-support/meta-nxp-demo-experience
+    path: sources/meta-nxp-demo-experience
+    refspec: 52eaf8bf42f8eda2917a1c8c046003c8c2c8f629
+
+bblayers_conf_header:
+  standard: |
+    LCONF_VERSION = "7"
+    BBPATH = "${TOPDIR}"
+    BBFILES ?= ""
+
+local_conf_header:
+  reduce_diskspace: |
+    INHERIT += "rm_work"
+  standard: |
+    CONF_VERSION = "2"
+    PACKAGE_CLASSES = "package_deb"
+    USER_CLASSES = "buildstats"
+    PATCHRESOLVE = "noop"
+  debug-tweaks: |
+    EXTRA_IMAGE_FEATURES += "debug-tweaks package-management"
+  diskmon: |
+    BB_DISKMON_DIRS = "\
+        STOPTASKS,${TMPDIR},1G,100K \
+        STOPTASKS,${DL_DIR},1G,100K \
+        STOPTASKS,${SSTATE_DIR},1G,100K \
+        STOPTASKS,/tmp,100M,100K \
+        HALT,${TMPDIR},100M,1K \
+        HALT,${DL_DIR},100M,1K \
+        HALT,${SSTATE_DIR},100M,1K \
+        HALT,/tmp,10M,1K"
+  build-info: |
+    INHERIT += "image-buildinfo"
+    IMAGE_BUILDINFO_VARS = "DISTRO DISTRO_VERSION MACHINE DEVICE_MODEL DEVICE_TYPE IMX_GPU_VERSION RELEASE_VERSION"
+    RELEASE_VERSION = "v2.01.03"
+  license-flags: |
+    ACCEPT_FSL_EULA = "1"
+  users-groups: |
+    EXTRA_USERS_PARAMS += " useradd -m -s /bin/bash -a -G video,render,wayland,input,root,sudo,dialout,plugdev,tty,disk -p '$(openssl passwd adlink)' adlink; \
+                            usermod -a -G video,render,wayland,input,root,sudo,dialout,plugdev,tty,disk -p '$(openssl passwd weston)' weston; \
+                            usermod -p '$(openssl passwd root)' root;"
+  language-pack: |
+    GLIBC_GENERATE_LOCALES = " en_US.UTF-8 en_GB.UTF-8 zh_TW.UTF-8 zh_CN.UTF-8 \
+                               fr_FR.UTF-8 es_ES.UTF-8 de_DE.UTF-8 pt_BR.UTF-8 \
+                               ja_JP.UTF-8 ko_KR.UTF-8 th_TH.UTF-8 vi_VN.UTF-8 \
+                               ms_MY.UTF-8 id_ID.UTF-8"
+    IMAGE_LINGUAS = " en-us en-gb zh-tw zh-cn fr-fr es-es de-de pt-br \
+                      ja-jp ko-kr th-th vi-vn ms-my id-id"
+    IMAGE_INSTALL:append = " glibc-utils localedef locale-base-en-us locale-base-en-gb \
+                             locale-base-zh-tw locale-base-zh-cn locale-base-fr-fr \
+                             locale-base-es-es locale-base-de-de locale-base-pt-br \
+                             locale-base-ja-jp locale-base-ko-kr locale-base-th-th \
+                             locale-base-vi-vn locale-base-ms-my locale-base-id-id"
+    IMAGE_INSTALL:append = " source-han-sans-tw-fonts source-han-sans-kr-fonts \
+                             source-han-sans-jp-fonts source-han-sans-cn-fonts \
+                             ttf-tlwg"
+    CUSTOM_DEFAULT_LOCALE_LANG = "en_US.UTF-8"
+  image-features: |
+    IMAGE_FEATURES[validitems] += "kiosk-mode hab remote logo resize locale fastboot"
+    EXTRA_IMAGE_FEATURES += "ssh-server-openssh"
+    DISTRO_FEATURES:append = " sensors adlink optee"
+    MACHINE_FEATURES:append = " stmm"
+    IMAGE_FSTYPES = "wic.bmap wic.gz"
+  sanity-check: |
+    CONNECTIVITY_CHECK_URIS = "https://www.google.com"
+  extra-packages: |
+    IMAGE_INSTALL:append = " chromium-ozone-wayland"
+  package-configs: |
+    TOOLCHAIN_TARGET_TASK:append = " onnxruntime-dev"
+    PACKAGECONFIG:append:pn-qemu-system-native = " sdl"
+    PACKAGECONFIG:append:pn-opencv_mx8 = " test"
+    UBOOT_EXTRA_CONFIGS:append = " LPDDR4_ALL"
+

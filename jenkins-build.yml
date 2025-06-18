@@ -1,0 +1,8 @@
+header:
+  version: 8
+
+local_conf_header:
+  cache-dir: |
+    DL_DIR = "/home/jenkins/downloads"
+    SSTATE_DIR = "/home/jenkins/sstate-cache"
+
