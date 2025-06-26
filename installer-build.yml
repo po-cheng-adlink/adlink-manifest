@@ -1,0 +1,10 @@
+header:
+  version: 8
+
+local_conf_header:
+  fix-image-dependencies: |
+    WIC_PARTITION_TYPE = "ext4"
+    GUI_DIALOG_CMD = ""
+    INSTALLER_TARGET_IMAGE = "adlink-image-verification"
+    IMAGE_NAME_SUFFIX:pn-image-datapart = ""
+    IMAGE_NAME_SUFFIX:pn-adlink-image-installer = ""
