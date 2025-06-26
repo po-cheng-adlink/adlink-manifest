@@ -1,0 +1,9 @@
+header:
+  version: 8
+
+local_conf_header:
+  fix-image-dependencies: |
+    BASE_IMAGE_INCLUDE_PATH = "../../../meta-imx/meta-imx-sdk/dynamic-layers/qt6-layer/recipes-fsl/images/"
+    WIC_PARTITION_TYPE = "ext4"
+    GUI_DIALOG_CMD = ""
+    INSTALLER_TARGET_IMAGE = "adlink-image-verification"
