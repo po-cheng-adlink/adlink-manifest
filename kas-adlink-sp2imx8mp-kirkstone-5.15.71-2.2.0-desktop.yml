@@ -1,0 +1,171 @@
+header:
+  version: 8
+
+machine: sp2-imx8mpdesktop
+distro: imx-desktop-xwayland
+target:
+  - imx-image-desktop
+
+repos:
+  meta-adlink-nxp:
+    url: https://github.com/ADLINK/meta-adlink-nxp
+    path: sources/meta-adlink-nxp
+    refspec: kirkstone
+
+  meta-adlink-demo:
+    url: https://github.com/ADLINK/meta-adlink-demo
+    path: sources/meta-adlink-demo
+    refspec: kirkstone
+
+  meta-adlink-edge:
+    url: https://github.com/ADLINK/meta-adlink-edge
+    path: sources/meta-adlink-edge
+    refspec: kirkstone
+
+  meta-imx:
+    url: https://github.com/nxp-imx/meta-imx
+    path: sources/meta-imx
+    refspec: kirkstone-5.15.71-2.2.0
+    layers:
+      meta-bsp:
+      meta-sdk:
+      meta-ml:
+      meta-v2x:
+
+  base:
+    url: https://github.com/Freescale/fsl-community-bsp-base
+    path: sources/base
+    refspec: 60f79f7af60537146298560079ae603260f0bd14
+    layers:
+      .: excluded
+
+  poky:
+    url: https://git.yoctoproject.org/git/poky
+    path: sources/poky
+    refspec: 24a3f7b3648185e33133f5d96b184a6cb6524f3d
+    layers:
+      meta:
+      meta-poky:
+
+  meta-openembedded:
+    url: https://github.com/openembedded/meta-openembedded
+    path: sources/meta-openembedded
+    refspec: 744a4b6eda88b9a9ca1cf0df6e18be384d9054e3
+    layers:
+      meta-oe:
+      meta-multimedia:
+      meta-python:
+      meta-gnome:
+      meta-networking:
+      meta-filesystems:
+      meta-xfce:
+
+  meta-freescale:
+    url: https://github.com/Freescale/meta-freescale
+    path: sources/meta-freescale
+    refspec: c82d4634e7aba8bc0de73ce1dfc997b630051571
+
+  meta-freescale-3rdparty:
+    url: https://github.com/Freescale/meta-freescale-3rdparty
+    path: sources/meta-freescale-3rdparty
+    refspec: 5977197340c7a7db17fe3e02a4e014ad997565ae
+
+  meta-freescale-distro:
+    url: https://github.com/Freescale/meta-freescale-distro
+    path: sources/meta-freescale-distro
+    refspec: d5bbb487b2816dfc74984a78b67f7361ce404253
+
+  meta-clang:
+    url: https://github.com/kraj/meta-clang
+    path: sources/meta-clang
+    refspec: c728c3f9168c8a4ed05163a51dd48ca1ad8ac21d
+
+  meta-browser:
+    url: https://github.com/OSSystems/meta-browser
+    path: sources/meta-browser
+    refspec: e232c2e21b96dc092d9af8bea4b3a528e7a46dd6
+    layers:
+      meta-chromium:
+
+  meta-qt6:
+    url: https://code.qt.io/yocto/meta-qt6
+    path: sources/meta-qt6
+    refspec: 92019beed22aed8847c585c568cfcf41ef4dc8b7
+
+  meta-virtualization:
+    url: https://git.yoctoproject.org/git/meta-virtualization
+    path: sources/meta-virtualization
+    refspec: 9482648daf0bb42ff3475e7892542cf99f3b8d48
+
+  meta-nxp-demo-experience:
+    url: https://github.com/nxp-imx-support/meta-nxp-demo-experience
+    path: sources/meta-nxp-demo-experience
+    refspec: 52eaf8bf42f8eda2917a1c8c046003c8c2c8f629
+
+  meta-nxp-desktop:
+    url: https://github.com/nxp-imx/meta-nxp-desktop
+    path: sources/meta-nxp-desktop
+    refspec: 5f5bfd21c445eaa2d963d4b606d9ef56078eab8f
+
+bblayers_conf_header:
+  standard: |
+    LCONF_VERSION = "7"
+    BSPDIR := "${@os.path.abspath(os.path.dirname(d.getVar('FILE', True)) + '/../..')}"
+
+local_conf_header:
+  reduce_diskspace: |
+    INHERIT += "rm_work"
+  standard: |
+    CONF_VERSION = "2"
+    PACKAGE_CLASSES = "package_rpm"
+    USER_CLASSES = "buildstats"
+    PATCHRESOLVE = "noop"
+  debug-tweaks: |
+    EXTRA_IMAGE_FEATURES += "debug-tweaks package-management"
+  diskmon: |
+    BB_DISKMON_DIRS = "\
+        STOPTASKS,${TMPDIR},1G,100K \
+        STOPTASKS,${DL_DIR},1G,100K \
+        STOPTASKS,${SSTATE_DIR},1G,100K \
+        STOPTASKS,/tmp,100M,100K \
+        HALT,${TMPDIR},100M,1K \
+        HALT,${DL_DIR},100M,1K \
+        HALT,${SSTATE_DIR},100M,1K \
+        HALT,/tmp,10M,1K"
+  build-info: |
+    INHERIT += "image-buildinfo"
+    IMAGE_BUILDINFO_VARS = "DISTRO DISTRO_VERSION MACHINE DEVICE_MODEL DEVICE_TYPE IMX_GPU_VERSION RELEASE_VERSION"
+    RELEASE_VERSION = "v2.01.03"
+  license-flags: |
+    ACCEPT_FSL_EULA = "1"
+    LICENSE_FLAGS_ACCEPTED:append = " commercial"
+  users-groups: |
+    EXTRA_USERS_PARAMS += " useradd -m -s /bin/bash -a -G video,render,wayland,input,root,sudo,dialout,plugdev,tty,disk -p '$(openssl passwd adlink)' adlink; \
+                            usermod -a -G video,render,wayland,input,root,sudo,dialout,plugdev,tty,disk -p '$(openssl passwd weston)' weston; \
+                            usermod -p '$(openssl passwd root)' root;"
+  docker-groups: |
+    APTGET_ADD_USERS = "adlink:rbBJY7ksv1BvY:/bin/bash"
+    APTGET_ADD_USERS:append = "${@bb.utils.contains_any('DEPENDS', 'docker-datapart image-datapart', ':${USER_EXTRA_GROUPS}', '', d)}"
+    USER_EXTRA_GROUPS = "${@bb.utils.contains_any('DEPENDS', 'docker-datapart image-datapart', ',docker', '', d)}"
+    EXTRA_USERS_PARAMS:append = "${@bb.utils.contains_any('DEPENDS', 'docker-datapart image-datapart', ' usermod -a -G docker adlink;', '', d)}"
+  image-features: |
+    IMAGE_FEATURES[validitems] += "kiosk-mode hab remote logo resize locale fastboot"
+    EXTRA_IMAGE_FEATURES += "ssh-server-openssh"
+    DISTRO_FEATURES:append = " sensors adlink optee"
+    MACHINE_FEATURES:append = " stmm"
+    IMAGE_FSTYPES = "wic.bmap wic.gz"
+  sanity-check: |
+    CONNECTIVITY_CHECK_URIS = "https://www.google.com"
+  package-configs: |
+    TOOLCHAIN_TARGET_TASK:append = " onnxruntime-dev"
+    PACKAGECONFIG:append:pn-qemu-system-native = " sdl"
+    PACKAGECONFIG:append:pn-opencv_mx8 = " test"
+    UBOOT_EXTRA_CONFIGS:append = " LPDDR4_ALL"
+    RDEPENDS:qtbase:remove="vulkan-loader"
+    RDEPENDS:qtbase:append=" libvulkan-imx"
+    KERNEL_MODULE_AUTOLOAD:append = "${@bb.utils.contains('MACHINE_FEATURES', 'wifi', ' mlan moal', '', d)}"
+  package-masks: |
+    BBMASK += "poky/meta/recipes-devtools/pseudo"
+  desktop-packages: |
+    APTGET_EXTRA_PACKAGES += "python3-pip"
+    YOCTO-DEPENDS-LIST:append = " libc6-dev python3-2to3 python3-profile"
